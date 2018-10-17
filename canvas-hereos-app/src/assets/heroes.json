@@ -1,0 +1,22 @@
+[
+    {
+      "hereo": "Black Canary",
+      "photo": "./assets/images/black-canary.png",
+      "name": "Sara Lance"
+    },
+    {
+      "hereo": "White Canary",
+      "photo": "./assets/images/white-canary.png",
+      "name": "Sara Lance"
+    },
+    {
+      "hereo": "Green Arrow",
+      "photo": "./assets/images/Arrow_oliver_queen.png",
+      "name": "Oliver Queen"
+    },
+    {
+      "hereo": "Arrow",
+      "photo": "./assets/images/arrow.png",
+      "name": "Oliver Queen"
+    }
+  ]

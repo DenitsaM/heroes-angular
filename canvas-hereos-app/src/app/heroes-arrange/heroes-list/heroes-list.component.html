@@ -1,0 +1,28 @@
+<div class="heroes-content-wrap">
+  <span>Choose hereos</span>
+  <button (click)="showHeroes()">my hereos</button>
+
+  <div *ngIf ="showHereos">
+    <ul class="heroes-list">
+      <li *ngFor="let hero of heroes; let i = index">
+        <div [ngStyle]="{background: 'url(' + hero.photo + ')', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}" class="heroes-draggable">
+            <div 
+            class="heroes-img-placeholder" 
+            ngDraggable
+            [position]="position"
+            (edge)="checkEdge($event)" 
+            [bounds]="myBounds" 
+            [inBounds]="inBounds"
+            (started)="onStart($event)"
+            (click)="myDragClicked($event)"
+            id="{{i}}">
+            <button (click)="resetPosition($event)" class="btn btn-outline-primary">x</button>
+            <img src="{{hero.photo}}"/>
+          </div>
+        </div>
+        <span>{{hero.name}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="canvas-wrap" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': !edge?.bottom, 'left-b': !edge?.left, 'right-b': !edge?.right }" #myBounds></div>
