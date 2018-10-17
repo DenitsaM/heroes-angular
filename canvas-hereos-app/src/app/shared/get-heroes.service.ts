@@ -7,10 +7,14 @@ import { HttpClient } from '@angular/common/http';
 export class GetHeroesService {
 
   constructor(private http: HttpClient) { }
-  configUrl = 'assets/heroes.json';
+  configHeroesUrl = 'assets/heroes.json';
+  configSettingsUrl = 'assets/settings.json';
 
   getHeroes() {
-    return this.http.get(this.configUrl);
+    return this.http.get(this.configHeroesUrl);
   }
 
+  getSettings(){
+    return this.http.get(this.configSettingsUrl);
+  }
 }

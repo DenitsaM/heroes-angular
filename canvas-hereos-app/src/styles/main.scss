@@ -1,30 +1,45 @@
 @import  './variables.scss';
 @import  './mixins.scss';
 
-
+li{
+    list-style-type: none;
+}
 .heroes-container{
-    @include clearfix;
+    app-heroes-list{
+        display: flex;
+    }
 }
 .heroes-list{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
     li{
-        list-style-type: none;
         flex-shrink: 0;
-        width: 120px;
         height: auto;
 
     }
     .ng-draggable{
         position: relative;
     }
+    .settings-placeholder{
+        width: 120px;
+    }
 }
-
+.settings-placeholder{
+    height: auto;
+    position: relative;
+    margin: 0;
+    z-index: 1;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}
 .heroes-img-placeholder{
     width: 120px;
     height: auto;
     position: relative;
+    z-index: 10;
     img{
         width: 100%;
         height: auto;
@@ -34,8 +49,10 @@
         position: absolute;
     }
     &.showClose{
-        .btn-outline-primary{
-            display: block;
+        &:hover{
+            .btn-outline-primary{
+                display: block;
+            }
         }
     }
 }
@@ -44,16 +61,37 @@
     height: 270px;
 }
 .canvas-wrap{
-    width: 500px;
-    height: 500px;
+    width: 1200px;
+    height: 670px;
     border: 1px solid $main-grey;
-    float: right;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    position: relative;
     .ng-draggable{
         position: absolute;
     }
+    .settings-placeholder{
+        width: 100%;
+    }
+    .settings-list{
+        align-self:center;
+        width: 100%;
+    }
+    .save-canvas{
+        position: absolute;
+        z-index: 20;
+    }
 }
 .heroes-content-wrap{
-    float: left;
+    min-width: 600px;
+}
+.saved-images-container{
+    
+    canvas{
+        width: 601px !important;
+        height: 336px !important;
+    }
 }
 /* in-flight clone */
 .gu-mirror {

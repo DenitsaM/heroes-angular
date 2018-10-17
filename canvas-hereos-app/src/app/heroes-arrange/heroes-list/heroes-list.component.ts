@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer } from '@angular/core';
+import { Component, OnInit, Renderer, ViewChildren, QueryList, Output, EventEmitter } from '@angular/core';
 import {GetHeroesService} from '../../shared/get-heroes.service';
 import {Hero} from './hero.model';
 
@@ -7,15 +7,18 @@ import {Hero} from './hero.model';
   templateUrl: './heroes-list.component.html',
   styleUrls: ['./heroes-list.component.css']
 })
-export class HeroesListComponent implements OnInit {
+export class HeroesListComponent {
   public heroes: Hero;
+  public settings: object;
   public showHereos:boolean = false;
   public resizable:boolean = false;
   public draggable:boolean = false;
   public position:object;
   public indexValue: Array<string> = [];
-
-  inBounds: boolean;
+  public inBounds: boolean;
+  public containerId: string;
+  @ViewChildren('heroesContainer') heroesContainer: QueryList<any>;
+  @Output() onSavedCanvas: EventEmitter<any> = new EventEmitter<any>();
 
   edge = {
     top: true,
@@ -25,11 +28,6 @@ export class HeroesListComponent implements OnInit {
   };
   constructor(private getHeroesService: GetHeroesService, private renderer: Renderer) { }
 
-  ngOnInit() {
-
-  }
-
-  
   showHeroes() {
     this.getHeroesService.getHeroes()
       .subscribe((data: Hero) =>{
@@ -38,7 +36,14 @@ export class HeroesListComponent implements OnInit {
         console.log("this.heroes", this.heroes);
       });
   }
-
+  showSettings() {
+    this.getHeroesService.getSettings()
+      .subscribe((data: object) =>{
+        this.settings = data;
+        console.log("this.heroes", this.settings);
+      },
+      error => {console.log("error", error)});
+  }
   onStart(event) {
     this.inBounds = true;
 
@@ -51,13 +56,30 @@ export class HeroesListComponent implements OnInit {
     this.edge = event;
   }
   resetPosition(event){
-    event.target.parentNode.style.transform = 'translate(0px, 0px)';
+    //event.target.parentNode.style.transform = 'translate(0px, 0px)';
     this.renderer.setElementClass( event.target.parentNode,"showClose", false);
+    event.target.parentNode.remove();
+
+    var target = event.target.parentNode;
+    var idAttr = target.attributes.id;
+    var value = idAttr.nodeValue;
+
+    
+    this.heroesContainer.forEach(heroesContainer =>{
+
+      this.containerId = heroesContainer.nativeElement.id;
+      if (this.containerId == value){
+        heroesContainer.nativeElement.appendChild(target);
+      }
+    });
   }
   myDragClicked(e){
     e.preventDefault();
     e.stopPropagation();
     e.target.parentNode.style.transform = 'translate(0px, 0px)';
+  }
 
+  onSAve(canvas){
+    this.onSavedCanvas.emit(canvas);
   }
 }

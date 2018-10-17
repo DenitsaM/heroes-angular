@@ -1,4 +1,7 @@
 <div class="heroes-container">
-    <app-heroes-list></app-heroes-list>
+    <app-heroes-list (onSavedCanvas)="onSAve($event)"></app-heroes-list>
+    <div class="saved-images-container" #savedImages>
+        
+    </div>
 </div>
 

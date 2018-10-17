@@ -1,28 +1,45 @@
 <div class="heroes-content-wrap">
-  <span>Choose hereos</span>
+  <h3>Choose hereos</h3>
   <button (click)="showHeroes()">my hereos</button>
 
   <div *ngIf ="showHereos">
     <ul class="heroes-list">
       <li *ngFor="let hero of heroes; let i = index">
-        <div [ngStyle]="{background: 'url(' + hero.photo + ')', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}" class="heroes-draggable">
+        <div 
+          [ngStyle]="{background: 'url(' + hero.photo + ')', backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}" 
+          class="heroes-draggable" 
+          dragula="DRAGULA_SETTINGS"
+          id="{{i+ '-hero'}}"
+          #heroesContainer>
             <div 
-            class="heroes-img-placeholder" 
-            ngDraggable
-            [position]="position"
-            (edge)="checkEdge($event)" 
-            [bounds]="myBounds" 
-            [inBounds]="inBounds"
-            (started)="onStart($event)"
-            (click)="myDragClicked($event)"
-            id="{{i}}">
-            <button (click)="resetPosition($event)" class="btn btn-outline-primary">x</button>
-            <img src="{{hero.photo}}"/>
+              class="heroes-img-placeholder" 
+              ngDraggable
+              [position]="position"
+              (edge)="checkEdge($event)" 
+              [bounds]="myBounds" 
+              [inBounds]="inBounds"
+              (started)="onStart($event)"
+              (click)="myDragClicked($event)"
+              id="{{i+ '-hero'}}">
+              <button (click)="resetPosition($event)" class="btn btn-outline-primary">x</button>
+              <img src="{{hero.photo}}"/>
           </div>
         </div>
         <span>{{hero.name}}</span>
       </li>
     </ul>
   </div>
+  <h3>Choose settings</h3>
+  <button (click)="showSettings()">Settings</button>
+  <div>
+    <ul class="heroes-list" dragula="DRAGULA_SETTINGS">
+      <li *ngFor="let setting of settings; let i = index" class="settings-list">
+        <figure class="settings-placeholder"><img src="{{setting.photo}}"/></figure>
+        <span>{{setting.name}}</span>
+      </li>
+    </ul>
+  </div>
 </div>
-<div class="canvas-wrap" [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': !edge?.bottom, 'left-b': !edge?.left, 'right-b': !edge?.right }" #myBounds></div>
+<div class="canvas-wrap" #myBounds dragula="DRAGULA_SETTINGS">
+  <button (click)="onSAve($event)" class="save-canvas" data-html2canvas-ignore>Save</button>
+</div>
